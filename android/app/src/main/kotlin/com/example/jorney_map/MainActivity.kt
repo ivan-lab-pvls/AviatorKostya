@@ -1,4 +1,4 @@
-package com.aviaplanner.app.utils
+package com.aviaux.utiity.travel
 
 import io.flutter.embedding.android.FlutterActivity
 
