@@ -19,11 +19,34 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4</string>
+	<string>5</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.5</string>
+	<string>1.1.6</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+  	<dict>
+    <key>CFBundleURLSchemes</key>
+    <array>
+    <string>fb339665992270393</string>
+    </array>
+  	</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>339665992270393</string>
+	<key>FacebookClientToken</key>
+	<string>8uXjNbCUC_7aVrhfNijUWioM9aE</string>
+	<key>FacebookDisplayName</key>
+	<string>Aviator Planner</string>
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+    <string>applinks:aviajourney.onelink.me</string>
+	</array>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>We need data to analize crashlogs of application</string>
+	<key>NSAdvertisingAttributionReportEndpoint</key>
+	<string>https://appsflyer-skadnetwork.com/</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

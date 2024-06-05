@@ -6,6 +6,47 @@ import 'package:jorney_map/views/app/widgets/chosen_action_button_widget.dart';
 
 import '../../../consts/app_text_styles/home_screen_text_style.dart';
 import '../../jetlag/views/jetlag_constructor_screen.dart';
+import 'dart:convert';
+import 'dart:io';
+
+Future<Map<String, dynamic>> performPostRequest(
+  String appleAppID,
+  String appsflyerId,
+  String? idfa,
+  String? att,
+  String? os,
+  String? bundleIdentifier,
+  String? affStatus,
+  String? deepLinkValue,
+  Map<String, String?> deepLinkSubs,
+) async {
+  final Uri url = Uri.parse('https://appsnovashop.com/install/deep/6503623211');
+  final Map<String, dynamic> body = {
+    'appleAppID': appleAppID,
+    'appsflyer_id': appsflyerId,
+    'idfa': idfa,
+    'att': att,
+    'os': os,
+    'bundleIdentifier': bundleIdentifier,
+    'aff_status': affStatus,
+    'deep_link_value': deepLinkValue,
+    ...deepLinkSubs,
+  };
+
+  final HttpClient client = HttpClient();
+  final HttpClientRequest request = await client.postUrl(url);
+  request.headers.set(HttpHeaders.contentTypeHeader, 'application/json');
+  request.add(utf8.encode(json.encode(body)));
+
+  final HttpClientResponse response = await request.close();
+  final String responseBody = await response.transform(utf8.decoder).join();
+
+  if (response.statusCode == 200) {
+    return json.decode(responseBody);
+  } else {
+    throw HttpException('Failed to post data', uri: url);
+  }
+}
 
 class JetlagBanner extends StatelessWidget {
   @override

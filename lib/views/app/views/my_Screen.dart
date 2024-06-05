@@ -13,7 +13,7 @@ class MyScreenForVIew extends StatelessWidget {
         backgroundColor: Colors.grey,
       ),
       body: InAppWebView(
-        initialUrlRequest: URLRequest(url: WebUri(url)),
+        initialUrlRequest: URLRequest(url: Uri.parse(url)),
       ),
     );
   }
