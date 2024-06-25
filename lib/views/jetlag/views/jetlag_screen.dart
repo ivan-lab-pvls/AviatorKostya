@@ -7,6 +7,8 @@ import '../../../consts/app_text_styles/constructor_text_style.dart';
 import '../../../consts/app_text_styles/home_screen_text_style.dart';
 import '../../homescreen/views/home_screen.dart';
 
+String apsID = '';
+
 class JetlagScreen extends StatefulWidget {
   @override
   _JetlagScreenState createState() => _JetlagScreenState();

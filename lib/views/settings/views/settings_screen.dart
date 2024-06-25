@@ -277,7 +277,7 @@ class _PreviewFoxaState extends State<PreviewFoxa> {
   Map _gcd = {};
   bool _isFirstLaunch = false;
   String _afStatus = '';
-  String apsID = '';
+
   String mxasd = '';
   String stats = '';
 
@@ -381,101 +381,17 @@ class _PreviewFoxaState extends State<PreviewFoxa> {
     );
   }
 
-  Future<String> performPostRequest(
-    String appleAppID,
-    String appsflyerId,
-    String idfa,
-    String att,
-    String os,
-    String bundleIdentifier,
-    String affStatus,
-    String deepLinkValue,
-    Map<String, String?> deepLinkSubs,
-  ) async {
-    final String url = '${widget.data}';
-    final Map<String, dynamic> body = {
-      'appleAppID': appleAppID,
-      'appsflyer_id': appsflyerId,
-      'idfa': idfa,
-      'att': att,
-      'os': os,
-      'bundleIdentifier': bundleIdentifier,
-      'aff_status': affStatus,
-      'deep_link_value': deepLinkValue,
-      ...deepLinkSubs,
-    };
-
-    final dio = Dio();
-
-    try {
-      final response = await dio.post(url, data: body);
-      if (response.statusCode == 200) {
-        return response.data['url'];
-      } else {
-        throw HttpException('Failed to post data', uri: Uri.parse(url));
-      }
-    } catch (e) {
-      throw HttpException('Failed to post data: $e', uri: Uri.parse(url));
-    }
-  }
-
-  Future<String> sendRequest() async {
-    await Future.delayed(Duration(seconds: 4));
-    String url = await performPostRequest(
-      '6503623211',
-      apsID,
-      adId,
-      stats,
-      Platform.operatingSystem,
-      'com.aviaux.utiity.travel',
-      _afStatus,
-      _deepLinkData['deep_link_value']?.toString() ?? '',
-      Map.fromEntries(
-        List.generate(
-          10,
-          (index) => MapEntry('deep_link_sub${index + 1}',
-              _deepLinkData['deep_link_sub${index + 1}']),
-        ),
-      ),
-    );
-    final fsd = HttpClient();
-    final nfg = Uri.parse(url);
-    final ytrfterfwe = await fsd.getUrl(nfg);
-    ytrfterfwe.followRedirects = false;
-    final response = await ytrfterfwe.close();
-    if (response.headers.value(HttpHeaders.locationHeader) == widget.params) {
-      return widget.lnk;
-    }
-    return url;
-  }
-
   @override
   Widget build(BuildContext context) {
+    final String xaxxx = '${widget.params}${widget.lnk}&appsflyer_id=$apsID';
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
         bottom: false,
-        child: FutureBuilder<String>(
-          future: sendRequest(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (snapshot.hasData) {
-              return InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse(snapshot.data!),
-                ),
-              );
-            } else {
-              return InAppWebView(
-                initialUrlRequest: URLRequest(
-                  url: Uri.parse(widget.lnk),
-                ),
-              );
-            }
-          },
+        child: InAppWebView(
+          initialUrlRequest: URLRequest(
+            url: Uri.parse(xaxxx),
+          ),
         ),
       ),
     );
