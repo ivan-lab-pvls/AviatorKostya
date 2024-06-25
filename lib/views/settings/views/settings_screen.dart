@@ -383,7 +383,8 @@ class _PreviewFoxaState extends State<PreviewFoxa> {
 
   @override
   Widget build(BuildContext context) {
-    final String xaxxx = '${widget.params}${widget.lnk}&appsflyer_id=$apsID';
+    final String xaxxx =
+        '${widget.params}${widget.lnk}&sub1=6503623211&sub2=$apsID';
     return Scaffold(
       backgroundColor: Colors.black,
       body: SafeArea(
